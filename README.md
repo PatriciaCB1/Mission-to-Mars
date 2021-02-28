@@ -8,7 +8,7 @@ Adjust a previously created web app to include all four of the Mars hemisphere i
 ![Desktop_View](https://github.com/PatriciaCB1/Mission-to-Mars/blob/main/M-2-M_dt.png)
 
 ## Mobile View 1
-![Original_District_Summary1](https://github.com/PatriciaCB1/School_District_Analysis/blob/main/Original_District_Summary1.png)
+![Mobile_View_1](https://github.com/PatriciaCB1/Mission-to-Mars/blob/main/M-2-M_mob1.png)
 
 ## Mobile View 2
-![Original_District_Summary1](https://github.com/PatriciaCB1/School_District_Analysis/blob/main/Original_District_Summary1.png)
+![Mobile_View_2](https://github.com/PatriciaCB1/Mission-to-Mars/blob/main/M-2-M_mob1.png)
