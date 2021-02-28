@@ -8,24 +8,26 @@ import datetime as dt
 
 # Create function to initiat browser, create a data dictionary, end the WebDriver and return the scraped data.
 def scrape_all():
-   # Initiate headless driver for deployment
-   browser = Browser("chrome", executable_path="chromedriver", headless=True)
+    # Initiate headless driver for deployment
+    browser = Browser("chrome", executable_path="chromedriver", headless=True)
 
-   news_title, news_paragraph = mars_news(browser)
+    news_title, news_paragraph = mars_news(browser)
 
-   # Run all scraping functions and store results in dictionary
-   
-   data = {
+    # Run all scraping functions and store results in dictionary
+    
+    data = {
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
-   }
+        "last_modified": dt.datetime.now(),
+        "hemispheres": hem_url(browser)
+        
+    }
 
-   # Stop webdriver and return data
-   browser.quit()
-   return data
+    # Stop webdriver and return data
+    browser.quit()
+    return data
     
 
 
@@ -114,7 +116,25 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html()
 
+def hem_url(browser):
 
+# 1. Use browser to visit the URL 
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+
+    hem_url = []
+
+    for i in range(len(browser.find_by_tag('h3'))):   
+        hem = {}
+        browser.find_by_tag('h3')[i].click()
+        html = browser.html
+        img_soup = soup(html, 'html.parser')
+        hem_url_rel = img_soup.find('img', class_='wide-image').get('src')
+        hem['img_url'] = f'https://astrogeology.usgs.gov{hem_url_rel}'
+        hem['title'] = browser.find_by_css('h2.title').text
+        hem_url.append(hem)
+        browser.back()
+    return hem_url
 
 # Quit the browser to end the session
 browser.quit()

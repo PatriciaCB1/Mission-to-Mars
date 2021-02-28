@@ -1,6 +1,6 @@
 # Use Flask to render template, PyMongo to interact with MongoDB, use scraping code import from Jupyter notebook to Python
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_pymongo import PyMongo
 import scraping
 
@@ -13,17 +13,19 @@ mongo = PyMongo(app)
 
 # Define the route to the HTML page
 @app.route("/")
-def index():
+def index1():
    mars = mongo.db.mars.find_one()
-   return render_template("index.html", mars=mars)
+   return render_template("index1.html", mars=mars)
 
 # Add next route
 @app.route("/scrape")
 def scrape():
    mars = mongo.db.mars
    mars_data = scraping.scrape_all()
+   print(mars_data)
    mars.update({}, mars_data, upsert=True)
    return redirect('/', code=302)
 
 if __name__ == "__main__":
    app.run()
+
